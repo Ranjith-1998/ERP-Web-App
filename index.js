@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const initDb = require("./initdb"); // import initDb
 
 const app = express();
 
@@ -417,5 +418,9 @@ app.get("/api/report/:reportslug", async (req, res) => {
 
 
 // ---------------- START SERVER ----------------
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+(async () => {
+  await initDb();
+
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+})();
